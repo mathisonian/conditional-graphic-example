@@ -1,0 +1,84 @@
+[meta title:"Switch Component" description:"Short description of your project" /]
+
+[Header
+  title:"Idyll Conditional Graphic"
+  author:"mathisonian"
+  authorLink:"https://idyll-lang.org" /]
+
+A conditional graphic component. The following example instantiates a
+different component for each chart. See the source below.
+
+More scroller/stepper examples: [https://mathisonian.github.io/idyll/scaffolding-interactives/](https://mathisonian.github.io/idyll/scaffolding-interactives/)
+
+[var name:"clickIndex" value:0 /]
+
+[Stepper fullWidth:true currentStep:clickIndex]
+  [Graphic
+    onClick:`clickIndex = (clickIndex + 1) % 2`
+    style:`{background: 'white', cursor: 'pointer'}`]
+      [Conditional test:`clickIndex === 0` ]
+        [Chart
+          type:"line"
+          data:`[0, 1, 2, 3, 4, 5, 6]` /]
+      [/Conditional]
+      [Conditional test:`clickIndex === 1` ]
+        [Chart
+          type:`"scatter"`
+          data:`[0, 1, 2, 3, 4, 5, 6]` /]
+      [/Conditional]
+  [/Graphic]
+
+  [Step]## Line Chart [/Step]
+  [Step]## Scatter [/Step]
+
+
+  [StepperControl /]
+
+[/Stepper]
+
+```
+[var name:"clickIndex" value:0 /]
+
+[Stepper fullWidth:true currentStep:clickIndex]
+  [Graphic
+    onClick:`clickIndex = (clickIndex + 1) % 2`
+    style:`{background: 'white', cursor: 'pointer'}`]
+      [Conditional test:`clickIndex === 0` ]
+        [Chart
+          type:"line"
+          data:`[0, 1, 2, 3, 4, 5, 6]` /]
+      [/Conditional]
+      [Conditional test:`clickIndex === 1` ]
+        [Chart
+          type:`"scatter"`
+          data:`[0, 1, 2, 3, 4, 5, 6]` /]
+      [/Conditional]
+  [/Graphic]
+
+  [Step]## Line Chart [/Step]
+  [Step]## Scatter [/Step]
+
+
+  [StepperControl /]
+
+[/Stepper]
+```
+
+This uses the custom component `Conditional`, the source for which is below.
+
+```js
+const React = require('react');
+
+class Conditional extends React.Component {
+  render() {
+    const { test, children } = this.props;
+    if (test) {
+      return <div>{children}</div>
+    }
+    return null;
+  }
+}
+
+module.exports = Conditional;
+```
+
